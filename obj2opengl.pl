@@ -20,7 +20,7 @@ with glDrawArrays.
 
 =head1 AUTHOR
 
-Heiko Behrens (http://www.1160pm.net)
+Heiko Behrens (http://www.HeikoBehrens.net)
 
 =head1 VERSION
 
@@ -449,7 +449,7 @@ sub writeOutput {
 	print OUTFILE "glNormalPointer(GL_FLOAT, 0, ".$object."Normals);\n"
 		if $numNormals > 0;
 	print OUTFILE "glTexCoordPointer(2, GL_FLOAT, 0, ".$object."TexCoords);\n"
-		if $numTextrue > 0;
+		if $numTexture > 0;
 	print OUTFILE "\n";
 	print OUTFILE "// draw data\n";
 	print OUTFILE "glDrawArrays(GL_TRIANGLES, 0, ".$object."NumVerts);\n";
