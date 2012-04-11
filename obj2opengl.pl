@@ -508,7 +508,7 @@ sub writeOutput {
 		
 		print OUTFILE "};\n\n";
 	}
-	print OUTFILE "#endif /* !$outTag" . "_h";
+	print OUTFILE "#endif /* !$outTag" . "_h */";
 	
 	close OUTFILE;
 }
