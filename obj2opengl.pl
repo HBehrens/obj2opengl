@@ -429,6 +429,8 @@ sub writeOutput {
 	open ( OUTFILE, ">$outFilename" ) 
 	  || die "Can't create file $outFilename ... exiting\n";
 	
+	my $outTag = substr($outFilename, 2, length($outFilename) - 4);
+
 	print OUTFILE "/*\n";
 	print OUTFILE "created with obj2opengl.pl\n\n";
 
@@ -454,6 +456,9 @@ sub writeOutput {
 	print OUTFILE "// draw data\n";
 	print OUTFILE "glDrawArrays(GL_TRIANGLES, 0, ".$object."NumVerts);\n";
 	print OUTFILE "*/\n\n";
+	
+	print OUTFILE "#ifndef $outTag" . "_h\n";
+	print OUTFILE "#define $outTag" . "_h\n\n";
 	
 	# needed constant for glDrawArrays
 	print OUTFILE "unsigned int ".$object."NumVerts = ".($numFaces * 3).";\n\n";
@@ -503,6 +508,7 @@ sub writeOutput {
 		
 		print OUTFILE "};\n\n";
 	}
+	print OUTFILE "#endif /* !$outTag" . "_h";
 	
 	close OUTFILE;
 }
