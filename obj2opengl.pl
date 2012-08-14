@@ -24,7 +24,7 @@ Heiko Behrens (http://www.HeikoBehrens.net)
 
 =head1 VERSION
 
-14th August 2012 (initial version)
+14th August 2012
 
 =head1 COPYRIGHT
 
