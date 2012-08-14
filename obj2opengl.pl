@@ -24,7 +24,7 @@ Heiko Behrens (http://www.HeikoBehrens.net)
 
 =head1 VERSION
 
-25th August 2009 (initial version)
+14th August 2012 (initial version)
 
 =head1 COPYRIGHT
 
@@ -447,6 +447,17 @@ sub normalizeNormals {
 	}
 }
 
+sub fixedIndex {
+    local $idx = $_[0];
+    local $num = $_[1];
+    if($idx >= 0)
+    {
+        $idx;
+    } else {
+        $num + $idx + 1;
+    }
+}
+
 sub writeOutput {
 	open ( OUTFILE, ">$outFilename" ) 
 	  || die "Can't create file $outFilename ... exiting\n";
@@ -484,9 +495,9 @@ sub writeOutput {
 	print OUTFILE "float ".$object."Verts \[\] = {\n"; 
 	for( $j = 0; $j < $numFaces; $j++)
 	{
-		$ia = $va_idx[$j];
-		$ib = $vb_idx[$j];
-		$ic = $vc_idx[$j];
+		$ia = fixedIndex($va_idx[$j], $numVerts);
+		$ib = fixedIndex($vb_idx[$j], $numVerts);
+		$ic = fixedIndex($vc_idx[$j], $numVerts);
 		print OUTFILE "  // $face_line[$j]\n";
 		print OUTFILE "  $xcoords[$ia], $ycoords[$ia], $zcoords[$ia],\n";
 		print OUTFILE "  $xcoords[$ib], $ycoords[$ib], $zcoords[$ib],\n";
@@ -498,9 +509,9 @@ sub writeOutput {
 	if($numNormals > 0) {
 		print OUTFILE "float ".$object."Normals \[\] = {\n"; 
 		for( $j = 0; $j < $numFaces; $j++) {
-			$ia = $na_idx[$j];
-			$ib = $nb_idx[$j];
-			$ic = $nc_idx[$j];
+			$ia = fixedIndex($na_idx[$j], $numNormals);
+			$ib = fixedIndex($nb_idx[$j], $numNormals);
+			$ic = fixedIndex($nc_idx[$j], $numNormals);
 			print OUTFILE "  // $face_line[$j]\n";
 			print OUTFILE "  $nx[$ia], $ny[$ia], $nz[$ia],\n";
 			print OUTFILE "  $nx[$ib], $ny[$ib], $nz[$ib],\n";
@@ -514,9 +525,9 @@ sub writeOutput {
 	if($numTexture) {
 		print OUTFILE "float ".$object."TexCoords \[\] = {\n"; 
 		for( $j = 0; $j < $numFaces; $j++) {
-			$ia = $ta_idx[$j];
-			$ib = $tb_idx[$j];
-			$ic = $tc_idx[$j];
+			$ia = fixedIndex($ta_idx[$j], $numTexture);
+			$ib = fixedIndex($tb_idx[$j], $numTexture);
+			$ic = fixedIndex($tc_idx[$j], $numTexture);
 			print OUTFILE "  // $face_line[$j]\n";
 			print OUTFILE "  $tx[$ia], $ty[$ia],\n";
 			print OUTFILE "  $tx[$ib], $ty[$ib],\n";
